@@ -1,0 +1,105 @@
+# PH pagespeed start
+<IfModule pagespeed_module>
+ModPagespeed off
+ModPagespeedRewriteLevel PassThrough
+ModPagespeedEnableFilters add_head,fallback_rewrite_css_urls,flatten_css_imports,rewrite_style_attributes_with_url,extend_cache,convert_meta_tags,trim_urls,combine_javascript,rewrite_javascript,inline_javascript,rewrite_css,combine_css,inline_css,inline_import_to_link,insert_img_dimensions,convert_jpeg_to_progressive,resize_mobile_images,lazyload_images
+</IfModule>
+# PH pagespeed end 
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^webconceptions.fr$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.webconceptions.fr$
+RewriteCond %{REQUEST_URI} !dist/
+RewriteRule (.*) /dist/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?webconceptions.fr [NC]
+
+RewriteRule \.(jpg|jpeg|png|gif|webp)$ http://fakeimg.pl/400x200/?text=Pas_touche_aux_images_:) [NC,R,L]
+
+
+
+Options All -Indexes 
+IndexIgnore *
+ServerSignature Off
+Options +FollowSymLinks
+AddDefaultCharset UTF-8
+
+#Start security
+<IfModule mod_headers.c>
+Header set X-XSS-Protection "1; mode=block"
+Header always set X-Content-Type-Options "nosniff"
+AddType text/css .css
+Header always set X-FRAME-OPTIONS "DENY"
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header set Permissions-Policy "accelerometer=(), geolocation=('self'), fullscreen=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), display-capture=('self'), microphone=(), payment=()" 
+</IfModule>
+
+<IfModule mod_headers.c>
+Header set Content-Security-Policy "base-uri 'self'; style-src 'self' 'unsafe-inline' ka-f.fontawesome.com; script-src-elem 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/; frame-src 'self' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/"
+</IfModule>
+
+#End security
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 month"
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType text/xml "access plus 0 seconds"
+ExpiresByType application/xml "access plus 0 seconds"
+ExpiresByType application/json "access plus 0 seconds"
+ExpiresByType application/pdf "access plus 0 seconds"
+ExpiresByType application/rss+xml "access plus 1 hour"
+ExpiresByType application/atom+xml "access plus 1 hour"
+ExpiresByType application/x-font-ttf "access plus 2 month"
+ExpiresByType font/opentype "access plus 2 month"
+ExpiresByType application/x-font-woff "access plus 2 month"
+ExpiresByType application/x-font-woff2 "access plus 2 month"
+ExpiresByType image/svg+xml "access plus 2 month"
+ExpiresByType application/vnd.ms-fontobject "access plus 2 month"
+ExpiresByType image/jpg "access plus 2 month"
+ExpiresByType image/jpeg "access plus 2 month"
+ExpiresByType image/gif "access plus 2 month"
+ExpiresByType image/png "access plus 2 month"
+ExpiresByType video/ogg "access plus 2 month"
+ExpiresByType audio/ogg "access plus 2 month"
+ExpiresByType video/mp4 "access plus 2 month"
+ExpiresByType video/webm "access plus 2 month"
+ExpiresByType text/css "access plus 6 month"
+ExpiresByType application/javascript "access plus 6 month"
+ExpiresByType application/x-shockwave-flash "access plus 1 week"
+ExpiresByType image/x-icon "access plus 1 week"
+</IfModule>
+
+# En-têtes
+Header unset ETag
+FileETag None
+# Protection contre les injections de fichiers
+RewriteCond %{REQUEST_METHOD} GET
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+RewriteRule .* - [F]
+
+<ifModule mod_headers.c>  
+<filesMatch "\.(ico|jpe?g|png|gif|swf)$">  
+    Header set Cache-Control "public"  
+</filesMatch>  
+<filesMatch "\.(css)$">  
+    Header set Cache-Control "public"  
+</filesMatch>  
+<filesMatch "\.(js)$">  
+    Header set Cache-Control "private"  
+</filesMatch>  
+<filesMatch "\.(x?html?|php)$">  
+    Header set Cache-Control "private, must-revalidate"
+</filesMatch>
+</ifModule>
+
+
+
+

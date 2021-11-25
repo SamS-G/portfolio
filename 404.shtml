@@ -1,0 +1,121 @@
+<span class="error">404</span>
+<div class="border"></div>
+<p>Um... oops?</p>
+
+<style>@import url('https://fonts.googleapis.com/css?family=Roboto|Saira+Semi+Condensed:100');
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #333;
+  font-family: "Roboto", sans-serif;
+  color: #eee;
+  text-align: center;
+}
+a {
+  color: #06f;
+  font-size: 1em;
+}
+a:hover {
+  color: #06f;
+}
+.topbar {
+  display: flex;
+  width: 80%;
+  background: #aaa;
+  background: RGBa(255,255,255,0.3);
+  margin: 10px auto;
+  height: 70px;
+  line-height: 70px;
+  border-radius: 3px;
+}
+.topbar a {
+  flex-grow: 1;
+  text-align: center;
+  color: #05f;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+.topbar a:hover {
+  border-bottom: 3px solid #06f;
+  background: #999;
+  background: RGBa(0,0,0,0.1);
+}
+.topbar a:first-child {
+  border-radius: 3px 0 0 3px;
+}
+.topbar a:nth-child(6) {
+  border-radius: 0 3px 3px 0;
+}
+.name {
+  text-transform: uppercase;
+  color: #ee4444 !important;
+}
+.error {
+  position: relative;
+  display: table;
+  margin: auto;
+  font-size: 10em;
+  font-family: "Saira Semi Condensed", sans-serif;
+  font-weight: 100;
+  transform: rotateY(-5deg);
+  animation: grow 1s linear infinite;
+  z-index: 100000;
+}
+.border {
+  height: 2px;
+  width: 1px;
+  background: #888;
+  margin: auto;
+  animation: wide 1s ease infinite;
+}
+@keyframes grow {
+  0% {
+    color: #eee;
+    transform: rotate(-5deg);
+    border-bottom: none;
+  }
+  50% {
+    color: #888;
+    transform: rotate(5deg);
+    border-bottom: 1px solid #fff;
+  }
+  100% {
+    color: #eee;
+    transform: rotate(-5deg);
+  }
+}
+@keyframes wide {
+  0% {
+    width: 1px;
+  }
+  50% {
+    width: 300px;
+  }
+  100% {
+    width: 1px;
+  }
+}
+@media (max-width: 600px) {
+  .topbar {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+  .topbar a {
+    border-radius: 0 !important;
+    font-size:
+  }
+}
+@media (max-width: 450px) {
+  .topbar {
+    height: 50px;
+    line-height: 50px;
+  }
+  .topbar a {
+    font-size: 0.9em;
+  }
+}
+</style>

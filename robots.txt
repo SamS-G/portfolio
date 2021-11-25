@@ -1,0 +1,7 @@
+User-Agent:  * 
+Disallow: 
+
+Allow: /
+
+Sitemap: https://webconceptions.fr/sitemap.xml
+
