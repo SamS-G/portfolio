@@ -1,10 +1,5 @@
 <?php
 
-    /**
-     * PHPMailer simple contact form example.
-     * If you want to accept and send uploads in your form, look at the send_file_upload example.
-     */
-
 //Import the PHPMailer class into the global namespace
     use PHPMailer\PHPMailer\PHPMailer;
 
@@ -16,11 +11,10 @@
         $msg = '';
         $email = '';
         $to = 'samuel.guichardon@webconceptions.fr';
-        //Apply some basic validation and filtering to the subject
         if (array_key_exists('subject', $_POST)) {
             $subject = substr(strip_tags($_POST['subject']), 0, 255);
         } else {
-            $subject = 'Pas de sujet renseigner';
+            $subject = 'Pas de sujet renseigné';
         }
         //Apply some basic validation and filtering to the query
         if (array_key_exists('query', $_POST)) {
@@ -30,17 +24,12 @@
             $query = '';
             $msg = 'Pas de message contenu !';
             $err = true;
-        }
-        //Apply some basic validation and filtering to the name
         if (array_key_exists('name', $_POST)) {
             //Limit length and strip HTML tags
             $name = substr(strip_tags($_POST['name']), 0, 255);
         } else {
             $name = '';
         }
-        //Validate to address
-        //Never allow arbitrary input for the 'to' address as it will turn your form into a spam gateway!
-        //Substitute appropriate addresses from your own domain, or simply use a single, fixed address
         if (array_key_exists('type', $_POST) && in_array($_POST['type'], ['commercial', 'après-vente', 'autres'], true)) {
             $questionType = $_POST['type'];
         } else {
@@ -62,7 +51,7 @@
             $mail->Host = 'mail.webconceptions.fr';
             $mail->SMTPAuth = true;
             $mail->Username = 'samuel.guichardon@webconceptions.fr';
-            $mail->Password = 'WorkPlace66!*)';
+            $mail->Password = '';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
             $mail->Port = 465;
 
